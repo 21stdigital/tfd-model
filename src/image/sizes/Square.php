@@ -1,6 +1,6 @@
 <?php
 
-namespace TFD\Image;
+namespace TFD\Image\Sizes;
 
 class Square extends SizeGroup
 {

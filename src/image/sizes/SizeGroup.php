@@ -2,7 +2,7 @@
 
 namespace TFD\Image\Sizes;
 
-use TFD\Image;
+use TFD;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff;
 
 class SizeGroup
