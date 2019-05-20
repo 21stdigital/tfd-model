@@ -245,6 +245,23 @@ class Image extends Model
         }
     }
 
+    public static function toMimeType($extension = 'jpg')
+    {
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                return 'image/jpeg';
+            case 'png':
+                return 'image/png';
+            case 'gif':
+                return 'image/gif';
+            case 'webp':
+                return 'image/webp';
+            case 'svg':
+                return 'image/svg+xml';
+        }
+        return '';
+    }
 
     /**
      * Find featured image model by it's post ID
