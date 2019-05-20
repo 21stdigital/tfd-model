@@ -176,7 +176,8 @@ class SizeGroup
 
     public function parseSources($id)
     {
-        return array_map(
+        dlog("parse sources");
+        $res = array_map(
             function ($source) use ($id) {
 
                 $media = "(min-width: $source[0]px)";
@@ -196,6 +197,8 @@ class SizeGroup
             },
             $this->sources
         );
+        dlog($res);
+        return $res;
     }
 
     public function getSources($id)
