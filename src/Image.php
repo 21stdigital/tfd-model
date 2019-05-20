@@ -99,7 +99,7 @@ class Image extends Model
             $this->setSizeGroup($sizeGroup);
         }
 
-        return $this->renderView('figure', [
+        $this->renderView('figure', [
             'src' => $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
@@ -116,7 +116,7 @@ class Image extends Model
             $this->setSizeGroup($sizeGroup);
         }
 
-        return $this->renderView('picture', [
+        $this->renderView('picture', [
             'src' => $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
@@ -135,7 +135,7 @@ class Image extends Model
 
         $defaultClasses = apply_filters('tfd_image_classes', ['Image']);
 
-        return $this->renderView('image', [
+        $this->renderView('image', [
             'src' => $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
@@ -150,7 +150,7 @@ class Image extends Model
         extract($params);
         $view = str_replace('.', '/', $view);
         $path = $this->viewPath . $view . '.php';
-        return  file_exists($path) ? include($path) : '';
+        file_exists($path) ? include($path) : '';
     }
 
     // ----------------------------------------------------
