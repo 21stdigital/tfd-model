@@ -47,10 +47,11 @@ class Image extends Model
             ? fly_get_attachment_image_src($this->ID, 'full')
             : wp_get_attachment_image_src($this->ID, 'full');
         if (isset($image) && is_array($image) && !empty($image)) {
+            list($src, $w, $h) = $image;
             return (object)[
-                'src' => array_slice($test, 0, 1, true)[0],
-                'width' => array_slice($test, 1, 1, true)[0],
-                'height' => array_slice($test, 2, 1, true)[0],
+                'src' => $src,
+                'width' => $w,
+                'height' => $h,
             ];
         }
         return null;
@@ -70,19 +71,26 @@ class Image extends Model
         ];
     }
 
-    public function draw($sizeGroup, $drawType)
+    private function getSizeGroup($sizeGroup)
     {
-        switch ($drawType) {
-            case 'figure':
-                return $this->drawFigure();
-            case 'picture':
-                return $this->drawPicture();
-            default:
-                return $this->drawImage();
+        if (is_string($sizeGroup)) {
+            $class = 'TFD\\Image' . ;
         }
     }
 
-    public function drawFigure()
+    public function draw($sizeGroup, $drawType = 'picture')
+    {
+        switch ($drawType) {
+            case 'figure':
+                return $this->drawFigure($sizeGroup);
+            case 'picture':
+                return $this->drawPicture($sizeGroup);
+            default:
+                return $this->drawImage($sizeGroup);
+        }
+    }
+
+    public function drawFigure($sizeGroup)
     {
         return $this->renderView('figure', [
             'src' => $this->src,
@@ -94,7 +102,7 @@ class Image extends Model
         ]);
     }
 
-    public function drawPicture()
+    public function drawPicture($sizeGroup)
     {
         return $this->renderView('picture', [
             'src' => $this->src,
@@ -106,7 +114,7 @@ class Image extends Model
         ]);
     }
 
-    public function drawImage()
+    public function drawImage($sizeGroup)
     {
         return $this->renderView('image', [
             'src' => $this->src,
