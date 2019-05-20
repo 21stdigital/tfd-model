@@ -1,6 +1,6 @@
 <figure class="Figure">
     <div class="Figure__Image">
-        <?= $image->drawPicture($this->sizeGroup) ?>
+        <?= $image->drawPicture($sizeGroup) ?>
     </div>
     <?php if ($caption && $captionEnabled) : ?>
         <figcaption class="Figure__Caption">

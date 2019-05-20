@@ -17,5 +17,5 @@
             >
         <?php endif; ?>
     <?php endforeach ?>
-    <?= $image->drawImage($this->sizeGroup) ?>
+    <?= $image->drawImage($sizeGroup) ?>
 </picture>

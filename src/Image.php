@@ -100,11 +100,11 @@ class Image extends Model
         }
 
         return $this->renderView('figure', [
-            'src' => $this->src,
+            'src' => $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
             'height' => $this->height,
-            'sources' => [],
+            'sources' => $this->sizeGroup->getSources($this->ID),
             'sizeGroup' => $this->sizeGroup,
             'image' => $this,
         ]);
@@ -117,7 +117,7 @@ class Image extends Model
         }
 
         return $this->renderView('picture', [
-            'src' => $this->src,
+            'src' => $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
             'height' => $this->height,
@@ -136,7 +136,7 @@ class Image extends Model
         $defaultClasses = apply_filters('tfd_image_classes', ['Image']);
 
         return $this->renderView('image', [
-            'src' => $this->src,
+            'src' => $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
             'height' => $this->height,
