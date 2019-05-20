@@ -8,6 +8,7 @@ class Image extends Model
     public $postType = 'attachment';
     public $original;
     public $focalPoint;
+    private $sizeGroup;
 
     private $viewPath;
 
@@ -71,14 +72,17 @@ class Image extends Model
         ];
     }
 
-    private function getSizeGroup($sizeGroup)
+    private function setSizeGroup($sizeGroup)
     {
         if (is_string($sizeGroup)) {
-            $class = 'TFD\\Image' . ;
+            $sizeGroupClass = 'TFD\\Image' . ucfirst($sizeGroup);
+            $this->sizeGroup = new $sizeGroupClass();
+        } elseif(is_object($sizeGroup)) {
+            $this->sizeGroup = $sizeGroup;
         }
     }
 
-    public function draw($sizeGroup, $drawType = 'picture')
+    public function draw($sizeGroup = null, $drawType = 'picture')
     {
         switch ($drawType) {
             case 'figure':
@@ -90,8 +94,12 @@ class Image extends Model
         }
     }
 
-    public function drawFigure($sizeGroup)
+    public function drawFigure($sizeGroup = null)
     {
+        if (isset($sizeGroup)) {
+            $this->setSizeGroup($sizeGroup);
+        }
+
         return $this->renderView('figure', [
             'src' => $this->src,
             'alt' => $this->alt,
@@ -102,20 +110,28 @@ class Image extends Model
         ]);
     }
 
-    public function drawPicture($sizeGroup)
+    public function drawPicture($sizeGroup = null)
     {
+        if (isset($sizeGroup)) {
+            $this->setSizeGroup($sizeGroup);
+        }
+
         return $this->renderView('picture', [
             'src' => $this->src,
             'alt' => $this->alt,
             'width' => $this->width,
             'height' => $this->height,
-            'sources' => [],
+            'sources' => $this->sizeGroup->getSources($this->ID),
             'image' => $this,
         ]);
     }
 
     public function drawImage($sizeGroup)
     {
+        if (isset($sizeGroup)) {
+            $this->setSizeGroup($sizeGroup);
+        }
+
         return $this->renderView('image', [
             'src' => $this->src,
             'alt' => $this->alt,
