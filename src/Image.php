@@ -76,7 +76,7 @@ class Image extends Model
         if (is_string($sizeGroup)) {
             $sizeGroupClass = 'TFD\\Image\\Sizes\\' . ucfirst($sizeGroup);
             $this->sizeGroup = new $sizeGroupClass();
-        } elseif(is_object($sizeGroup)) {
+        } elseif (is_object($sizeGroup)) {
             $this->sizeGroup = $sizeGroup;
         }
     }
@@ -105,6 +105,7 @@ class Image extends Model
             'width' => $this->width,
             'height' => $this->height,
             'sources' => [],
+            'sizeGroup' => $this->sizeGroup,
             'image' => $this,
         ]);
     }
@@ -121,11 +122,12 @@ class Image extends Model
             'width' => $this->width,
             'height' => $this->height,
             'sources' => $this->sizeGroup->getSources($this->ID),
+            'sizeGroup' => $this->sizeGroup,
             'image' => $this,
         ]);
     }
 
-    public function drawImage($sizeGroup)
+    public function drawImage($sizeGroup = null)
     {
         if (isset($sizeGroup)) {
             $this->setSizeGroup($sizeGroup);
