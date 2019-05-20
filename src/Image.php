@@ -127,11 +127,13 @@ class Image extends Model
         ]);
     }
 
-    public function drawImage($sizeGroup = null)
+    public function drawImage($sizeGroup = null, $classes = [])
     {
         if (isset($sizeGroup)) {
             $this->setSizeGroup($sizeGroup);
         }
+
+        $defaultClasses = apply_filters('tfd_image_classes', ['Image']);
 
         return $this->renderView('image', [
             'src' => $this->src,
@@ -139,6 +141,7 @@ class Image extends Model
             'width' => $this->width,
             'height' => $this->height,
             'image' => $this,
+            'classes' => implode(' ', array_merge($defaultClasses, $classes)),
         ]);
     }
 
