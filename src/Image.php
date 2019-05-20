@@ -43,12 +43,12 @@ class Image extends Model
 
     private function getOriginal()
     {
-        $image = self::$isDynamicResizeEnabled() ? fly_get_attachment_image_src($this->ID, 'full') : wp_get_attachment_image_src($this->ID, 'full');
+        $image = self::isDynamicResizeEnabled() ? fly_get_attachment_image_src($this->ID, 'full') : wp_get_attachment_image_src($this->ID, 'full');
         if (isset($image) && is_array($image) && !empty($image)) {
             return (object)[
-                'src' => self::$isDynamicResizeEnabled() ? $image['src'] : $image[0],
-                'width' => self::$isDynamicResizeEnabled() ? $image['width'] : $image[1],
-                'height' => self::$isDynamicResizeEnabled() ? $image['height'] : $image[2],
+                'src' => self::isDynamicResizeEnabled() ? $image['src'] : $image[0],
+                'width' => self::isDynamicResizeEnabled() ? $image['width'] : $image[1],
+                'height' => self::isDynamicResizeEnabled() ? $image['height'] : $image[2],
             ];
         }
         return null;
