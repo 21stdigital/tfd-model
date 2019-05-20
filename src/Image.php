@@ -30,7 +30,6 @@ class Image extends Model
         'originalSrc'
     ];
 
-    public $sizeGroup;
 
     protected function boot()
     {
@@ -75,7 +74,7 @@ class Image extends Model
     private function setSizeGroup($sizeGroup)
     {
         if (is_string($sizeGroup)) {
-            $sizeGroupClass = 'TFD\\Image' . ucfirst($sizeGroup);
+            $sizeGroupClass = 'TFD\\Image\\Sizes\\' . ucfirst($sizeGroup);
             $this->sizeGroup = new $sizeGroupClass();
         } elseif(is_object($sizeGroup)) {
             $this->sizeGroup = $sizeGroup;

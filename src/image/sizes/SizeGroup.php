@@ -1,7 +1,8 @@
 <?php
 
-namespace TFD\Image;
+namespace TFD\Image\Sizes;
 
+use TFD\Image;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff;
 
 class SizeGroup
@@ -243,18 +244,25 @@ class SizeGroup
 
     private function addImageSizes()
     {
-        if ($this->sources) {
-            return $this->parseSources($id);
-        }
-
-        if ($this->detailedSources) {
-            return $this->parseDetailedSources($id);
-        }
-
         $sources = [];
-
-        if (function_exists('cloudinary_url')) {
+        if ($this->sources) {
+            $sources = $this->sources;
+        } elseif ($this->detailedSources) {
+            $sources = array_merge(array_map(
+                function ($source) {
+                    return array_map(
+                        function ($size) {
+                            $name = "$size[0]x$size[1]";
+                            return array_merge([$name], $size);
+                        },
+                        $source['srcset']
+                    );
+                },
+                $this->detailedSources
+            ));
         }
+
+        dlog("SOURCES", $sources);
 
         foreach ($sources as $source) {
             if (count($source) < 3) {
