@@ -172,12 +172,28 @@ class SizeGroup
         );
     }
 
+    private function arrayFlatten($array = null)
+    {
+        $result = [];
+        if (!is_array($array)) {
+            $array = func_get_args();
+        }
+
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $result = array_merge($result, $this->arrayFlatten($value));
+            } else {
+                $result = array_merge($result, array($key => $value));
+            }
+        }
+        return $result;
+    }
+
 
     public function parseSources($id)
     {
         $res = array_map(
             function ($source) use ($id) {
-
                 $media = "(min-width: $source[0]px)";
                 $sizes = '';
                 return array_map(
@@ -195,6 +211,8 @@ class SizeGroup
             },
             $this->sources
         );
+        $res = $this->arrayFlatten($res);
+        dlog($res);
         return $res;
     }
 
@@ -202,10 +220,12 @@ class SizeGroup
     {
         if (is_int($id)) {
             if ($this->sources) {
+                dlog('default');
                 return $this->parseSources($id);
             }
 
             if ($this->detailedSources) {
+                dlog('detail');
                 return $this->parseDetailedSources($id);
             }
         }
