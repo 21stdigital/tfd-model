@@ -3,7 +3,6 @@
 namespace TFD\Image\Sizes;
 
 use TFD;
-use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff;
 
 class SizeGroup
 {
@@ -176,7 +175,6 @@ class SizeGroup
 
     public function parseSources($id)
     {
-        dlog("parse sources");
         $res = array_map(
             function ($source) use ($id) {
 
@@ -197,7 +195,6 @@ class SizeGroup
             },
             $this->sources
         );
-        dlog($res);
         return $res;
     }
 
@@ -264,8 +261,6 @@ class SizeGroup
                 $this->detailedSources
             ));
         }
-
-        dlog("SOURCES", $sources);
 
         foreach ($sources as $source) {
             if (count($source) < 3) {
