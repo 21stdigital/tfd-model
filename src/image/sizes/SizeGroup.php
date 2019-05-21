@@ -172,22 +172,22 @@ class SizeGroup
         );
     }
 
-    private function arrayFlatten($array = null)
-    {
-        $result = [];
-        if (!is_array($array)) {
-            $array = func_get_args();
-        }
+    // private function arrayFlatten($array = null)
+    // {
+    //     $result = [];
+    //     if (!is_array($array)) {
+    //         $array = func_get_args();
+    //     }
 
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $result = array_merge($result, $this->arrayFlatten($value));
-            } else {
-                $result = array_merge($result, array($key => $value));
-            }
-        }
-        return $result;
-    }
+    //     foreach ($array as $key => $value) {
+    //         if (is_array($value)) {
+    //             $result = array_merge($result, $this->arrayFlatten($value));
+    //         } else {
+    //             $result = array_merge($result, array($key => $value));
+    //         }
+    //     }
+    //     return $result;
+    // }
 
 
     public function parseSources($id)
@@ -211,7 +211,6 @@ class SizeGroup
             },
             $this->sources
         );
-        $res = $this->arrayFlatten($res);
         dlog($res);
         return $res;
     }
@@ -232,18 +231,18 @@ class SizeGroup
     }
 
 
-    /**
-     * Get current instance.
-     *
-     * @return object
-     */
-    public static function getInstance()
-    {
-        if (!self::$_instance) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
+    // /**
+    //  * Get current instance.
+    //  *
+    //  * @return object
+    //  */
+    // public static function getInstance()
+    // {
+    //     if (!self::$_instance) {
+    //         self::$_instance = new self();
+    //     }
+    //     return self::$_instance;
+    // }
 
 
     /**
