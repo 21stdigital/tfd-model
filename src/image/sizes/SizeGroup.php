@@ -192,25 +192,20 @@ class SizeGroup
 
     public function parseSources($id)
     {
-        $res = array_map(
-            function ($source) use ($id) {
-                $media = "(min-width: $source[0]px)";
-                $sizes = '';
-                return array_map(
-                    function ($type) use ($media, $sizes, $source, $id) {
-                        $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
-                        return [
-                            'media' => $media,
-                            'sizes' => $sizes,
-                            'type' => TFD\Image::toMimeType($type),
-                            'scrset' => $srcset,
-                        ];
-                    },
-                    $this->formatTypes
-                );
-            },
-            $this->sources
-        );
+        $res = [];
+        foreach ($this->sources as $source) {
+            $media = "(min-width: $source[0]px)";
+            $sizes = '';
+            foreach ($this->formatTypes as $type) {
+                $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
+                $res[] = [
+                    'media' => $media,
+                    'sizes' => $sizes,
+                    'type' => TFD\Image::toMimeType($type),
+                    'scrset' => $srcset,
+                ];
+            }
+        }
         dlog($res);
         return $res;
     }
