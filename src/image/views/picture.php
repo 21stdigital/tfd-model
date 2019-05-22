@@ -12,7 +12,7 @@
                     type="<?= $source['type'] ?>"
                 <?php endif; ?>
                 <?php if (array_key_exists('srcset', $source) && $source['srcset']) : ?>
-                    media="<?=  implode(' ', $source['srcset']) ?>"
+                    srcset="<?=  implode(' ', $source['srcset']) ?>"
                 <?php endif; ?>
             >
         <?php endif; ?>
