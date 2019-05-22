@@ -203,7 +203,7 @@ class SizeGroup
                     'media' => $media,
                     'sizes' => $sizes,
                     'type' => TFD\Image::toMimeType($type),
-                    'scrset' => $srcset,
+                    'srcset' => $srcset,
                 ];
             }
         }
