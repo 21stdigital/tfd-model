@@ -170,6 +170,7 @@ class SizeGroup
             },
             $this->dpr
         );
+        return $srcset;
     }
 
     // private function arrayFlatten($array = null)
