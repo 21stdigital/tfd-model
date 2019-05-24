@@ -207,7 +207,6 @@ class SizeGroup
                 ];
             }
         }
-        dlog($res);
         return $res;
     }
 
