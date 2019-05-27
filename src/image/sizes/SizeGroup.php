@@ -163,7 +163,8 @@ class SizeGroup
         switch ($descriptor) {
             case 'width':
                 $src = $this->getSource($id, $w, $h, $type);
-                return "${src} ${w}w";
+                $url = $src->url;
+                return "${url} ${w}w";
 
             default:
                 return array_map(
