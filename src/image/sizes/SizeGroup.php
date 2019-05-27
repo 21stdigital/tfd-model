@@ -6,8 +6,6 @@ use TFD;
 
 class SizeGroup
 {
-    private static $_instance = null;
-
     // Color
     // https://cloudinary.com/documentation/image_transformations#color_effects
     public $effect = null; // grayscale
