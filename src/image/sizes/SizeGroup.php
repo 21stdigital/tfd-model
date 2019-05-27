@@ -100,7 +100,7 @@ class SizeGroup
     {
         $transformation = [
             'width' => $w,
-            'hight' => $h,
+            'height' => $h,
             'crop' => $this->cropMode ?: 'fit',
             'quality' => $this->quality,
         ];
