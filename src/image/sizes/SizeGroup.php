@@ -164,6 +164,8 @@ class SizeGroup
             default:
                 return array_map(
                     function ($dpr) use ($id, $w, $h, $type) {
+                        dlog($id, $w*$dpr, $h*$dpr, $type);
+
                         $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
                         $dprSuffix = $this->dprMediaSuffix($dpr);
                         return "{$src->url} {$dprSuffix}";
