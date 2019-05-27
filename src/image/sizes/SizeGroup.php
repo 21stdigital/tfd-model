@@ -166,9 +166,9 @@ class SizeGroup
                     function ($dpr) use ($id, $w, $h, $type) {
                         $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
                         $dprSuffix = $this->dprMediaSuffix($dpr);
-                        return "$src->url $dprSuffix";
+                        return "{$src->url} {$dprSuffix}";
                     },
-                    $this->dpr ?: [1]
+                    $this->dpr
                 );
         }
     }
