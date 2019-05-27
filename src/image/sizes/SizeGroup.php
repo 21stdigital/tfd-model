@@ -53,11 +53,7 @@ class SizeGroup
         ],
         [
             'media' => '',
-            'srcset' => [
-                [720, 720],
-                [640, 640],
-                [320, 320],
-            ],
+            'srcset' => [720, 720],
             'sizes' => '',
         ],
     ];
@@ -199,7 +195,7 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $media = "(min-width: $source[0]px)";
+            $media = "(min-width: {$source[0]}px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
@@ -223,8 +219,13 @@ class SizeGroup
             $sizes = $source['sizes'];
             foreach ($this->formatTypes as $type) {
                 $srcset = [];
-                foreach ($source['srcset'] as $srcet) {
-                    $srcset[] = $this->getSrcset($id, $srcet[0], $srcet[1], $type, 'width');
+                if ($sizes && count($source['srcset']) && is_array($source['srcset'][0])) {
+                    foreach ($source['srcset'] as $srcet) {
+                        $srcset[] = $this->getSrcset($id, $srcet[0], $srcet[1], $type, 'width');
+                    }
+                } else {
+                    list($width, $height) = $source['srcset'];
+                    $srcset = $this->getSrcset($id, $width, $height, $type);
                 }
                 $res[] = [
                     'media' => $media,
