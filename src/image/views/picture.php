@@ -6,7 +6,7 @@
                     media="<?= $source['media'] ?>"
                 <?php endif; ?>
                 <?php if (array_key_exists('sizes', $source) && $source['sizes']) : ?>
-                    sizes="<?= $source['sizes'] ?>"
+                    sizes="<?= implode(', ', $source['sizes']) ?>"
                 <?php endif; ?>
                 <?php if (array_key_exists('type', $source) && $source['type']) : ?>
                     type="<?= $source['type'] ?>"
