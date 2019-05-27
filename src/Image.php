@@ -73,6 +73,16 @@ class Image extends Model
 
     private function setSizeGroup($sizeGroup)
     {
+        /**
+         * Load Image Sizes from current theme
+         */
+
+        $path = get_template_directory() . '/app/ImageSizes/';
+        collect(glob($path . '*.php'))->map(function ($file) {
+            dlog($file);
+            return require_once($file);
+        });
+
         if (is_string($sizeGroup)) {
             $sizeGroupClass = 'TFD\\Image\\Sizes\\' . ucfirst($sizeGroup);
             $this->sizeGroup = new $sizeGroupClass();

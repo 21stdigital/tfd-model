@@ -212,7 +212,6 @@ class SizeGroup
     {
         if (is_int($id)) {
             if ($this->sources) {
-                dlog('default');
                 return $this->parseSources($id);
             }
 
