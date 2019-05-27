@@ -10,7 +10,7 @@ class SizeGroup
     // https://cloudinary.com/documentation/image_transformations#color_effects
     public $effect = null; // grayscale
 
-    // Gravity
+    // Gravityad
     // https://cloudinary.com/documentation/image_transformations#control_gravity
     public $gravity = 'auto'; // g_xy_center g_face:auto
     // Resizing and cropping images
@@ -237,20 +237,11 @@ class SizeGroup
     // }
 
 
-    /**
-     * Create a new instace with data
-     *
-     * @param array $insert
-     * @return void
-     */
-    public function __construct(array $insert = [])
-    {
-        $this->setup();
-    }
-
     public function setup()
     {
-        $this->addImageSizes();
+        if (!function_exists('cloudinary_url')) {
+            $this->addImageSizes();
+        }
     }
 
     private function addImageSizes()
@@ -272,7 +263,7 @@ class SizeGroup
                 $this->detailedSources
             ));
         }
-
+        dlog($sources);
         foreach ($sources as $source) {
             if (count($source) < 3) {
                 break;
