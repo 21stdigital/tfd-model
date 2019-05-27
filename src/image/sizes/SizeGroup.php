@@ -227,6 +227,7 @@ class SizeGroup
                     }
                 } else {
                     list($width, $height) = $source['srcset'];
+                    dlog($source['srcset'], count($source['srcset']), is_array($source['srcset'][0]));
                     $srcset = $this->getSrcset($id, $width, $height, $type);
                 }
                 $res[] = [
