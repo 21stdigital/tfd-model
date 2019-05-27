@@ -221,13 +221,13 @@ class SizeGroup
             $sizes = $source['sizes'];
             foreach ($this->formatTypes as $type) {
                 $srcset = [];
-                if ($sizes && count($source['srcset']) && is_array($source['srcset'][0])) {
+                if ($sizes['sizes'] && count($source['srcset']) && is_array($source['srcset'][0])) {
                     foreach ($source['srcset'] as $srcet) {
                         $srcset[] = $this->getSrcset($id, $srcet[0], $srcet[1], $type, 'width');
                     }
                 } else {
                     list($width, $height) = $source['srcset'];
-                    dlog($source['srcset'], $sizes, count($source['srcset']), is_array($source['srcset'][0]));
+                    dlog($source, $sizes, count($source['srcset']), is_array($source['srcset'][0]));
                     $srcset = $this->getSrcset($id, $width, $height, $type);
                 }
                 $res[] = [
