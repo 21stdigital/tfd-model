@@ -158,17 +158,23 @@ class SizeGroup
         return null;
     }
 
-    public function getSrcset($id, $w, $h, $type = 'jpg')
+    public function getSrcset($id, $w, $h, $type = 'jpg', $descriptor = "dpr")
     {
-        $srcset = array_map(
-            function ($dpr) use ($id, $w, $h, $type) {
-                $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
-                $dprSuffix = $this->dprMediaSuffix($dpr);
-                return "$src->url $dprSuffix";
-            },
-            $this->dpr
-        );
-        return $srcset;
+        switch ($descriptor) {
+            case 'width':
+                $src = $this->getSource($id, $w, $h, $type);
+                return "${src} ${w}w";
+
+            default:
+                return array_map(
+                    function ($dpr) use ($id, $w, $h, $type) {
+                        $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
+                        $dprSuffix = $this->dprMediaSuffix($dpr);
+                        return "$src->url $dprSuffix";
+                    },
+                    $this->dpr ?: [1]
+                );
+        }
     }
 
     // private function arrayFlatten($array = null)
@@ -207,6 +213,32 @@ class SizeGroup
         }
         return $res;
     }
+
+
+    public function parseDetailedSources($id)
+    {
+        $res = [];
+        foreach ($this->detailedSources as $source) {
+            $media = $source['media'];
+            $sizes = $source['sizes'];
+            foreach ($this->formatTypes as $type) {
+                $srcset = [];
+                foreach ($source['srcset'] as $srcet) {
+                    $srcset[] = $this->getSrcset($id, $srcet[0], $srcet[1], $type, 'width');
+                }
+                $res[] = [
+                    'media' => $media,
+                    'sizes' => $sizes,
+                    'type' => TFD\Image::toMimeType($type),
+                    'srcset' => $srcset,
+                ];
+
+            }
+        }
+        dlog($res);
+        return $res;
+    }
+
 
     public function getSources($id)
     {
