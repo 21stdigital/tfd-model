@@ -116,6 +116,7 @@ class Image extends Model
             'sources' => $this->sizeGroup->getSources($this->ID),
             'sizeGroup' => $this->sizeGroup,
             'image' => $this,
+            'lazy' => self::isLazyEnabled(),
         ]);
     }
 
@@ -133,6 +134,7 @@ class Image extends Model
             'sources' => $this->sizeGroup->getSources($this->ID),
             'sizeGroup' => $this->sizeGroup,
             'image' => $this,
+            'lazy' => self::isLazyEnabled(),
         ]);
     }
 
@@ -143,6 +145,9 @@ class Image extends Model
         }
 
         $defaultClasses = apply_filters('tfd_image_classes', ['Image']);
+        if (self::isLazyEnabled()) {
+            $defaultClasses = array_merge($defaultClasses, [self::lazyClass()]);
+        }
 
         $this->renderView('image', [
             'src' => $this->original->src,
@@ -151,6 +156,7 @@ class Image extends Model
             'height' => $this->height,
             'image' => $this,
             'classes' => implode(' ', array_merge($defaultClasses, $classes)),
+            'lazy' => self::isLazyEnabled(),
         ]);
     }
 
@@ -236,6 +242,16 @@ class Image extends Model
     // ----------------------------------------------------
     // STATIC METHODS
     // ----------------------------------------------------
+    public static function isLazyEnabled()
+    {
+        return apply_filters('tfd_image_lazy_loading', true);
+    }
+
+    public static function lazyClass()
+    {
+        return apply_filters('tfd_image_lazy_class', 'lazyload');
+    }
+
     public static function isDynamicResizeEnabled()
     {
         return function_exists('fly_get_attachment_image_src');

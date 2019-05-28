@@ -12,7 +12,11 @@
                     type="<?= $source['type'] ?>"
                 <?php endif; ?>
                 <?php if (array_key_exists('srcset', $source) && $source['srcset']) : ?>
-                    srcset="<?=  implode(', ', $source['srcset']) ?>"
+                    <?php if ($lazy) : ?>
+                        data-srcset="<?=  implode(', ', $source['srcset']) ?>"
+                    <?php else : ?>
+                        srcset="<?=  implode(', ', $source['srcset']) ?>"
+                    <?php endif; ?>
                 <?php endif; ?>
             >
         <?php endif; ?>
