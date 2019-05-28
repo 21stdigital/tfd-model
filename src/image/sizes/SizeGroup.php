@@ -164,8 +164,6 @@ class SizeGroup
             default:
                 return array_map(
                     function ($dpr) use ($id, $w, $h, $type) {
-                        dlog($id, $w*$dpr, $h*$dpr, $type);
-
                         $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
                         $dprSuffix = $this->dprMediaSuffix($dpr);
                         return "{$src->url} {$dprSuffix}";
@@ -227,7 +225,6 @@ class SizeGroup
                     }
                 } else {
                     list($width, $height) = $source['srcset'];
-                    dlog($source, $sizes, count($source['srcset']), is_array($source['srcset'][0]));
                     $srcset = $this->getSrcset($id, $width, $height, $type);
                 }
                 $res[] = [
@@ -239,7 +236,6 @@ class SizeGroup
 
             }
         }
-        dlog($res);
         return $res;
     }
 
@@ -252,7 +248,6 @@ class SizeGroup
             }
 
             if ($this->detailedSources) {
-                dlog('detail');
                 return $this->parseDetailedSources($id);
             }
         }
@@ -299,7 +294,7 @@ class SizeGroup
                 $this->detailedSources
             ));
         }
-        dlog($sources);
+
         foreach ($sources as $source) {
             if (count($source) < 3) {
                 break;
