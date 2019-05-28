@@ -221,7 +221,7 @@ class SizeGroup
             $sizes = $source['sizes'];
             foreach ($this->formatTypes as $type) {
                 $srcset = [];
-                if ($sizes['sizes'] && count($source['srcset']) && is_array($source['srcset'][0])) {
+                if ($sizes && count($source['srcset']) && is_array($source['srcset'][0])) {
                     foreach ($source['srcset'] as $srcet) {
                         $srcset[] = $this->getSrcset($id, $srcet[0], $srcet[1], $type, 'width');
                     }
