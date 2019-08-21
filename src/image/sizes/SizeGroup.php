@@ -65,11 +65,11 @@ class SizeGroup
     ];
 
     public $sources =  [
-        [1200, 620, 620],
-        [992, 560, 560],
-        [768, 420, 420],
-        [576, 360, 360],
         [0, 375, 256],
+        [576, 360, 360],
+        [768, 420, 420],
+        [992, 560, 560],
+        [1200, 620, 620],
         ['default', 620, 620],
     ];
 
@@ -195,7 +195,7 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $media = "(min-width: $source[0]px)";
+            $media = "(max-width: $source[0]px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
