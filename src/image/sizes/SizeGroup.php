@@ -195,7 +195,7 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $media = "(min-width: {$source[0]}px)";
+            $media = "(max-width: {$source[0]}px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
