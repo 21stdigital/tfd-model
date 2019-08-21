@@ -195,7 +195,11 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $mediaDirection = count($source) > 3 ? $source[0] : 'max';
+            error_log($source[0]);
+            error_log($source[1]);
+            error_log($source[2]);
+            error_log($source[3]);
+            $mediaDirection = count($source) > 3 ? $source[3] : 'max';
             $media = "({$$mediaDirection}-width: {$source[0]}px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
