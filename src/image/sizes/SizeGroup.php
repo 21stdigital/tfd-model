@@ -59,11 +59,11 @@ class SizeGroup
     ];
 
     public $sources =  [
-        [0, 375, 256],
-        [576, 360, 360],
-        [768, 420, 420],
-        [992, 560, 560],
-        [1200, 620, 620],
+        [0, 375, 256, 'max'],
+        [576, 360, 360, 'max'],
+        [768, 420, 420, 'max'],
+        [992, 560, 560, 'max'],
+        [1200, 620, 620, 'min'],
         ['default', 620, 620],
     ];
 
@@ -195,7 +195,8 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $media = "(max-width: {$source[0]}px)";
+            $mediaDirection = count($source) > 3 ? $source[0] : 'max';
+            $media = "({$$mediaDirection}-width: {$source[0]}px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
