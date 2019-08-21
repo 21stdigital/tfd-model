@@ -71,16 +71,16 @@ class Image extends Model
         ];
     }
 
-    private function setSizeGroup($sizeGroup)
+    public function setSizeGroup($sizeGroup)
     {
         /**
          * Load Image Sizes from current theme
          */
 
-        $path = get_theme_file_path() . '/app/ImageSizes/';
-        collect(glob($path . '*.php'))->map(function ($file) {
-            return require_once($file);
-        });
+        // $path = get_theme_file_path() . '/app/ImageSizes/';
+        // collect(glob($path . '*.php'))->map(function ($file) {
+        //     return require_once($file);
+        // });
 
         if (is_string($sizeGroup)) {
             $sizeGroupClass = 'TFD\\Image\\Sizes\\' . ucfirst($sizeGroup);
