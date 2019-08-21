@@ -6,8 +6,6 @@ use TFD;
 
 class SizeGroup
 {
-    private static $_instance = null;
-
     // Color
     // https://cloudinary.com/documentation/image_transformations#color_effects
     public $effect = null; // grayscale
@@ -55,11 +53,7 @@ class SizeGroup
         ],
         [
             'media' => '',
-            'srcset' => [
-                [720, 720],
-                [640, 640],
-                [320, 320],
-            ],
+            'srcset' => [720, 720],
             'sizes' => '',
         ],
     ];
@@ -100,7 +94,7 @@ class SizeGroup
     {
         $transformation = [
             'width' => $w,
-            'hight' => $h,
+            'height' => $h,
             'crop' => $this->cropMode ?: 'fit',
             'quality' => $this->quality,
         ];
@@ -160,17 +154,23 @@ class SizeGroup
         return null;
     }
 
-    public function getSrcset($id, $w, $h, $type = 'jpg')
+    public function getSrcset($id, $w, $h, $type = 'jpg', $descriptor = "dpr")
     {
-        $srcset = array_map(
-            function ($dpr) use ($id, $w, $h, $type) {
-                $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
-                $dprSuffix = $this->dprMediaSuffix($dpr);
-                return "$src->url $dprSuffix";
-            },
-            $this->dpr
-        );
-        return $srcset;
+        switch ($descriptor) {
+            case 'width':
+                $src = $this->getSource($id, $w, $h, $type);
+                return "{$src->url} {$w}w";
+
+            default:
+                return array_map(
+                    function ($dpr) use ($id, $w, $h, $type) {
+                        $src = $this->getSource($id, $w*$dpr, $h*$dpr, $type);
+                        $dprSuffix = $this->dprMediaSuffix($dpr);
+                        return "{$src->url} {$dprSuffix}";
+                    },
+                    $this->dpr
+                );
+        }
     }
 
     // private function arrayFlatten($array = null)
@@ -195,7 +195,7 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $media = "(max-width: $source[0]px)";
+            $media = "(min-width: {$source[0]}px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
@@ -210,16 +210,44 @@ class SizeGroup
         return $res;
     }
 
+
+    public function parseDetailedSources($id)
+    {
+        $res = [];
+        foreach ($this->detailedSources as $source) {
+            $media = $source['media'];
+            $sizes = $source['sizes'];
+            foreach ($this->formatTypes as $type) {
+                $srcset = [];
+                if ($sizes && count($source['srcset']) && is_array($source['srcset'][0])) {
+                    foreach ($source['srcset'] as $srcet) {
+                        $srcset[] = $this->getSrcset($id, $srcet[0], $srcet[1], $type, 'width');
+                    }
+                } else {
+                    list($width, $height) = $source['srcset'];
+                    $srcset = $this->getSrcset($id, $width, $height, $type);
+                }
+                $res[] = [
+                    'media' => $media,
+                    'sizes' => $sizes,
+                    'type' => TFD\Image::toMimeType($type),
+                    'srcset' => $srcset,
+                ];
+
+            }
+        }
+        return $res;
+    }
+
+
     public function getSources($id)
     {
         if (is_int($id)) {
             if ($this->sources) {
-                dlog('default');
                 return $this->parseSources($id);
             }
 
             if ($this->detailedSources) {
-                dlog('detail');
                 return $this->parseDetailedSources($id);
             }
         }
@@ -240,20 +268,11 @@ class SizeGroup
     // }
 
 
-    /**
-     * Create a new instace with data
-     *
-     * @param array $insert
-     * @return void
-     */
-    public function __construct(array $insert = [])
-    {
-        $this->setup();
-    }
-
     public function setup()
     {
-        $this->addImageSizes();
+        if (!function_exists('cloudinary_url')) {
+            $this->addImageSizes();
+        }
     }
 
     private function addImageSizes()
