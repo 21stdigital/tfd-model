@@ -70,5 +70,7 @@
                 "type:wordpress-plugin"
             ]
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
