@@ -5,7 +5,7 @@
     "require": {
         "php": "^7.1",
         "composer/installers": "^1.5",
-        "anthonybudd/wp_model": "^1.1",
+        "anthonybudd/wp_model": "dev-master@dev",
         "wpackagist-plugin/auto-cloudinary": "^1.1",
         "wpackagist-plugin/fly-dynamic-image-resizer": "^2.0"
     },
@@ -53,6 +53,10 @@
                     "composer/installers": "^1.0"
                 }
             }
+        },
+        {
+            "type": "vcs",
+            "url": "http://github.com/simnom/WP_Model"
         }
     ],
     "extra": {
@@ -66,5 +70,7 @@
                 "type:wordpress-plugin"
             ]
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

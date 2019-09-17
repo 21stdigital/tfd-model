@@ -10,7 +10,7 @@ class SizeGroup
     // https://cloudinary.com/documentation/image_transformations#color_effects
     public $effect = null; // grayscale
 
-    // Gravityad
+    // Gravity
     // https://cloudinary.com/documentation/image_transformations#control_gravity
     public $gravity = 'auto'; // g_xy_center g_face:auto
     // Resizing and cropping images
@@ -59,11 +59,11 @@ class SizeGroup
     ];
 
     public $sources =  [
-        [1200, 620, 620],
-        [992, 560, 560],
-        [768, 420, 420],
-        [576, 360, 360],
-        [0, 375, 256],
+        [0, 375, 256, 'max'],
+        [576, 360, 360, 'max'],
+        [768, 420, 420, 'max'],
+        [992, 560, 560, 'max'],
+        [1200, 620, 620, 'min'],
         ['default', 620, 620],
     ];
 
@@ -195,7 +195,8 @@ class SizeGroup
     {
         $res = [];
         foreach ($this->sources as $source) {
-            $media = "(min-width: {$source[0]}px)";
+            $mediaDirection = count($source) > 3 ? $source[3] : 'max';
+            $media = "({$mediaDirection}-width: {$source[0]}px)";
             $sizes = '';
             foreach ($this->formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
