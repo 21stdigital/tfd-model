@@ -36,7 +36,7 @@ class Image extends Model
         if (!empty($this->ID)) {
             $this->original = $this->getOriginal();
             $this->focalPoint = $this->getFocalPoint();
-            $this->viewPath = apply_filters('tfd_image_view_path', __DIR__ . '/image/views/');
+            $this->viewPath = apply_filters('tfd_image_view_path', __DIR__ . '/Image/Views/');
         }
         parent::boot();
     }
