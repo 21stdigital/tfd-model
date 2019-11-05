@@ -259,7 +259,7 @@ class Image extends Model
 
     public static function isCloudinaryEnabled()
     {
-        return function_exists('cloudinary_url');
+        return function_exists('cloudinary_url') && CLOUDINARY;
     }
 
     public static function isSVG($id)

@@ -113,7 +113,7 @@ class SizeGroup
     {
         $transformations = $this->getTransformations($w, $h);
         // Cloudinary
-        if (!is_admin() && function_exists('cloudinary_url')) {
+        if (!is_admin() && TFD\Image::isCloudinaryEnabled()) {
             $imageUrl = cloudinary_url($id, [
                 'transform' => $transformations,
             ]);
@@ -271,7 +271,7 @@ class SizeGroup
 
     public function setup()
     {
-        if (!function_exists('cloudinary_url')) {
+        if (!TFD\Image::isCloudinaryEnabled()) {
             $this->addImageSizes();
         }
     }
