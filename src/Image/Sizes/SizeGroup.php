@@ -17,12 +17,16 @@ class SizeGroup
     // https://cloudinary.com/documentation/image_transformations#resizing_and_cropping_images
     public $cropMode = 'fill'; //'fit limit
 
+    // https://cloudinary.com/documentation/image_transformations#automatic_format_selection
+    public $fetchFormat = 'auto';
+
+    // Fetch format option
     // Automatic pixel density detection
     // https://cloudinary.com/documentation/responsive_images#automatic_pixel_density_detection
     public $drpAuto = true;
 
-    public $quality = '80';
-    public $formatTypes = ['webp', 'jpg'];
+    public $quality = 'auto'; //'80';
+    public $formatTypes = ['jpg'];
     public $unit = 'px';
 
     public $dpr = [1,2];
@@ -97,6 +101,7 @@ class SizeGroup
             'height' => $h,
             'crop' => $this->cropMode ?: 'fit',
             'quality' => $this->quality,
+            'fetch_format' => $this->fetchFormat,
         ];
 
         if ($this->effect) {
