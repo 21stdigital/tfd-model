@@ -27,6 +27,12 @@ class Model extends \WP_Model
         return ($featuredImage !== false)? $featuredImage : $default;
     }
 
+    public function hasParent()
+    {
+        return $this->_post->post_parent;
+    }
+
+
     /**
     * @return void
     */
