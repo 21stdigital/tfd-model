@@ -4,6 +4,19 @@ namespace TFD;
 
 class Model extends \WP_Model
 {
+
+    /**
+     * Get model's featured image or return $default if it does not exist
+     *
+     * @param  string $default
+     * @return string
+     */
+    public function featuredImage(Image $default = null)
+    {
+        $featuredImage = Image::findFeaturedImage($this->ID);
+        return ($featuredImage !== false)? $featuredImage : $default;
+    }
+
     /**
     * @return void
     */
