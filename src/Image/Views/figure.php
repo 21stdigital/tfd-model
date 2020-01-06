@@ -2,9 +2,9 @@
     <div class="Figure__Image">
         <?= $image->drawPicture($sizeGroup) ?>
     </div>
-    <?php if ($caption && $captionEnabled) : ?>
+    <?php if ($image->caption) : ?>
         <figcaption class="Figure__Caption">
-            <?= $caption ?>
+            <?= $image->caption?>
         </figcaption>
     <?php endif ?>
 </figure>
