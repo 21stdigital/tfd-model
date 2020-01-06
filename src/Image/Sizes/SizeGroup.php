@@ -125,7 +125,7 @@ class SizeGroup
 
             if ($imageUrl && false === strpos($imageUrl, get_home_url())) {
                 return (object)[
-                    'url' => $this->replaceExtension($imageUrl, $type),
+                    'url' => $this->fetchFormat === 'auto' ? $imageUrl : $this->replaceExtension($imageUrl, $type),
                     'width' => $w,
                     'height' => $h,
                 ];
@@ -203,7 +203,13 @@ class SizeGroup
             $mediaDirection = count($source) > 3 ? $source[3] : 'max';
             $media = "({$mediaDirection}-width: {$source[0]}px)";
             $sizes = '';
-            foreach ($this->formatTypes as $type) {
+            $formatTypes =  $this->formatTypes;
+            if ($this->fetchFormat === ' auto') {
+                $info = pathinfo(wp_get_attachment_url($id));
+                $extension = $info['extension'];
+                $formatTypes = [$extension];
+            }
+            foreach ($formatTypes as $type) {
                 $srcset = $this->getSrcset($id, $source[1], $source[2], $type);
                 $res[] = [
                     'media' => $media,
@@ -239,7 +245,6 @@ class SizeGroup
                     'type' => TFD\Image::toMimeType($type),
                     'srcset' => $srcset,
                 ];
-
             }
         }
         return $res;

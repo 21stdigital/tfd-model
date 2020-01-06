@@ -4,7 +4,6 @@ namespace TFD;
 
 class Image extends Model
 {
-
     public $postType = 'attachment';
     public $original;
     public $focalPoint;
@@ -23,6 +22,7 @@ class Image extends Model
         'originalSrc',
         'width',
         'height',
+        'aspectRatio',
         'orientation',
         'fpx',
         'fpy',
@@ -214,6 +214,11 @@ class Image extends Model
     public function _getHeight()
     {
         return $this->original ? $this->original->height : 0;
+    }
+
+    public function _getAspectRatio()
+    {
+        return $this->height / $this->width;
     }
 
     public function _getOrientation()
