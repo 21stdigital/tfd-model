@@ -124,11 +124,23 @@ class SizeGroup
             ]);
 
             if ($imageUrl && false === strpos($imageUrl, get_home_url())) {
-                return (object)[
+                $res = (object)[
                     'url' => $this->fetchFormat === 'auto' ? $imageUrl : $this->replaceExtension($imageUrl, $type),
                     'width' => $w,
                     'height' => $h,
                 ];
+                if (WP_ENV !== 'production') {
+                    $live_domain = 'https://www.electronicbeats.net';
+                    $len = strlen($live_domain);
+                    $is_live_resource = (substr(get_the_guid($id), 0, $len) === $live_domain);
+                    if ($is_live_resource) {
+                        $url = str_ireplace('http://teb.localhost', $live_domain, $res->url);
+                        $url = str_ireplace('https://res.cloudinary.com/tfd/', 'https://res.cloudinary.com/electronic-beats/', $url);
+                        $url = str_ireplace('/teb-local/', '/stage/uploads/', $url);
+                        $res->url = $url;
+                    }
+                }
+                return $res;
             }
         }
 
