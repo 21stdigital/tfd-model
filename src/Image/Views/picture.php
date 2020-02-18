@@ -25,4 +25,4 @@
 </picture>
 <?php else : ?>
 <?= $image->drawImage($sizeGroup, $classes) ?>
-<?php endif 
+<?php endif;
