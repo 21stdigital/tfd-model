@@ -90,19 +90,19 @@ class Image extends Model
         }
     }
 
-    public function draw($sizeGroup = null, $drawType = 'picture')
+    public function draw($sizeGroup = null, $drawType = 'picture', $classes = [])
     {
         switch ($drawType) {
             case 'figure':
-                return $this->drawFigure($sizeGroup);
+                return $this->drawFigure($sizeGroup, $classes);
             case 'picture':
-                return $this->drawPicture($sizeGroup);
+                return $this->drawPicture($sizeGroup, $classes);
             default:
-                return $this->drawImage($sizeGroup);
+                return $this->drawImage($sizeGroup, $classes);
         }
     }
 
-    public function drawFigure($sizeGroup = null)
+    public function drawFigure($sizeGroup = null, $classes = [])
     {
         if (isset($sizeGroup)) {
             $this->setSizeGroup($sizeGroup);
@@ -117,10 +117,11 @@ class Image extends Model
             'sizeGroup' => $this->sizeGroup,
             'image' => $this,
             'lazy' => self::isLazyEnabled(),
+            'classes' => $classes,
         ]);
     }
 
-    public function drawPicture($sizeGroup = null)
+    public function drawPicture($sizeGroup = null, $classes = [])
     {
         if (isset($sizeGroup)) {
             $this->setSizeGroup($sizeGroup);
@@ -135,6 +136,7 @@ class Image extends Model
             'sizeGroup' => $this->sizeGroup,
             'image' => $this,
             'lazy' => self::isLazyEnabled(),
+            'classes' => $classes,
         ]);
     }
 
