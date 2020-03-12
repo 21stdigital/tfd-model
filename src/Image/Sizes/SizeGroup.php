@@ -110,6 +110,10 @@ class SizeGroup
             $transformation['effect'] = $this->effect;
         }
 
+        if ($this->radius) {
+            $transformation['radius'] = $this->radius;
+        }
+
         if ($this->isCrop()) {
             $transformation['gravity'] = $this->gravity;
         }

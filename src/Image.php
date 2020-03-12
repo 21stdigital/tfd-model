@@ -152,7 +152,7 @@ class Image extends Model
         }
 
         $this->renderView('image', [
-            'src' => $this->original->src,
+            'src' => self::isCloudinaryEnabled() ? cloudinary_url($this->ID) : $this->original->src,
             'alt' => $this->alt,
             'width' => $this->width,
             'height' => $this->height,
