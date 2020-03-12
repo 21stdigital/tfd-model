@@ -20,7 +20,9 @@ class SizeGroup
     // https://cloudinary.com/documentation/image_transformations#automatic_format_selection
     public $fetchFormat = 'auto';
 
-    // Fetch format option
+    // https://cloudinary.com/cookbook/applying_rounded_corners_to_an_image
+    public $radius = null;
+
     // Automatic pixel density detection
     // https://cloudinary.com/documentation/responsive_images#automatic_pixel_density_detection
     public $drpAuto = true;
